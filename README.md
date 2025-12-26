@@ -1,80 +1,149 @@
-# Android Tools - DNS Server docker services
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Than Naing Htwe | Portfolio</title>
 
-<a href="https://www.buymeacoffee.com/thedudetech"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a pizza&emoji=🍕&slug=thedudetech&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff"></a>
+<style>
+:root {
+    --bg: #0f172a;
+    --card: #020617;
+    --text: #ffffff;
+    --sub: #94a3b8;
+}
 
-# Purpose
+.light {
+    --bg: #f8fafc;
+    --card: #ffffff;
+    --text: #020617;
+    --sub: #475569;
+}
 
-You don't have a router capable of editing static DNS entries a?
-And you need to do something like E.g:
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    transition: 0.3s;
+}
 
-```dev.product.com to 192.168.0.123```
+header {
+    text-align: center;
+    padding: 60px 20px;
+}
 
-This solution is for you, it's a DNSMasq powered by a Docker container.
+.profile {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    border: 4px solid #38bdf8;
+    animation: glow 2s infinite alternate;
+}
 
+@keyframes glow {
+    from { box-shadow: 0 0 10px #38bdf8; }
+    to { box-shadow: 0 0 30px #38bdf8; }
+}
 
-# Disable Built-in DNSMasq on ubuntu
+h1 { margin: 15px 0 5px; }
+p { color: var(--sub); }
 
-Do this step only if nothing is resolved on your computer's browser.
+.controls {
+    margin-top: 15px;
+}
 
-Make sure:
+button {
+    padding: 8px 14px;
+    margin: 5px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
 
-/etc/resolv.conf
+section {
+    max-width: 900px;
+    margin: auto;
+    padding: 20px;
+}
 
+.card {
+    background: var(--card);
+    padding: 25px;
+    margin-bottom: 20px;
+    border-radius: 14px;
+}
 
-```
-nameserver 1.1.1.1
-```
+footer {
+    text-align: center;
+    padding: 20px;
+    color: var(--sub);
+}
+</style>
+</head>
 
-You can also use: 8.8.8.8, 8.8.4.4 and many more free dns servers to the outside world.
+<body id="body">
 
+<header>
+    <img src="profile.jpg" class="profile" alt="Profile">
+    <h1>Than Naing Htwe</h1>
 
-has only that
+    <p id="titleText">Android Developer • VPN App Creator</p>
 
-edit /etc/systemd/resolved.conf
+    <div class="controls">
+        <button onclick="toggleTheme()">🌗 Dark / Light</button>
+        <button onclick="setMM()">MM</button>
+        <button onclick="setEN()">EN</button>
+    </div>
+</header>
 
-```
-DNSStubListener=no
-```
+<section>
+    <div class="card">
+        <h2 id="aboutTitle">👤 About Me</h2>
+        <p id="aboutText">
+            Hello, I’m Than Naing Htwe.  
+            I’m an Android Developer who focuses on VPN applications and modern UI design.
+        </p>
+    </div>
 
-Restart systemd-resolved
+    <div class="card">
+        <h2 id="skillTitle">🛠 Skills</h2>
+        <ul id="skillList">
+            <li>Android Development (Kotlin)</li>
+            <li>VPN App Development</li>
+            <li>UI / UX Design</li>
+            <li>HTML & CSS</li>
+        </ul>
+    </div>
+</section>
 
+<footer>
+    © 2025 Than Naing Htwe
+</footer>
 
-```
-sudo systemctl restart systemd-resolved.service
-```
+<script>
+function toggleTheme() {
+    document.body.classList.toggle("light");
+}
 
+function setMM() {
+    document.getElementById("titleText").innerText =
+        "Android Developer • VPN App Creator";
+    document.getElementById("aboutTitle").innerText = "👤 About Me";
+    document.getElementById("aboutText").innerText =
+        "မင်္ဂလာပါ၊ ကျွန်တော်က Than Naing Htwe ဖြစ်ပါတယ်။ Android App နဲ့ VPN Application တည်ဆောက်ခြင်းကို အထူးစိတ်ဝင်စားသူပါ။";
+    document.getElementById("skillTitle").innerText = "🛠 Skills";
+}
 
-# Usage
+function setEN() {
+    document.getElementById("titleText").innerText =
+        "Android Developer • VPN App Creator";
+    document.getElementById("aboutTitle").innerText = "👤 About Me";
+    document.getElementById("aboutText").innerText =
+        "Hello, I’m Than Naing Htwe. I’m an Android Developer who focuses on VPN applications and modern UI design.";
+    document.getElementById("skillTitle").innerText = "🛠 Skills";
+}
+</script>
 
-```docker-compose up -d``` or ```docker-compose up``` to debug
-
-
-# Monitor
-
-Web interface for DNSMasq
-
-http://localhost:8080/
-
-
-# Config
-
-Either open the web interface and append this line:
-address=/dev.product.com/192.168.0.123 then click the restart button
-
-Or edit the dnsmasq.conf file in data then restart with
-
-```docker-compose restart``` # too slow
-
-# Mobile client
-
-Edit wifi config on your Android and select Static option, then edit the dns text to match your computers IP where DNSMasq is running.
-
-Just in case re-connect the wifi connection.
-
-# Testing
-
-dig dev.product.com
-
-dig @8.8.8.8 dev.product.com
-
-dig 127.0.0.1 dev.product.com # using the DNSMasq container
+</body>
+</html>
